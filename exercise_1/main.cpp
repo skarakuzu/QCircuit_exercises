@@ -1,4 +1,4 @@
-#include "./circuit.hpp"
+#include "../circuit.hpp"
 
 int main()
 {
@@ -9,8 +9,8 @@ int main()
   qc.apply_rz(0,45);
   qc.apply_rx(1,30);
 
-  qc.apply_cr(1,2,"X","X",30,90);
-  qc.apply_cr(2,0,"X","Y",90,180);
+  qc.apply_cr(1,2,"X","X",30,90,false);
+  qc.apply_cr(2,0,"X","Y",90,180,false);
 
   std::cout<<qc;
 
