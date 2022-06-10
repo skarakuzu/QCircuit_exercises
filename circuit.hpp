@@ -29,8 +29,11 @@ class Circuit
 
   /* basic rotation gates : in order to calculate the system unitary matrix, one needs to perform matrix-matrix 
    * multiplications and tensor products which require linear algebra libraries such as lapack, blas, magma ...
-   * I did not have time to implement those operations but it is doable in principle.
-   * Here I just put basic one qubit gates */
+   * I did not have time to implement those operations but it is doable in principle. */
+
+  /* In addition, I thought interfacing the Qiskit library and use this circuit class as a wrapper but 
+   * I was not sure if this would be accepted */
+   /* Here I just put basic one qubit gates */
 
   void apply_rx(int iqubit, double degree)
   {
