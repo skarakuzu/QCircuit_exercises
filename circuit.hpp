@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <iterator>
 #include<complex>
+#include<random>
 
 class Circuit 
 {
@@ -35,10 +36,10 @@ class Circuit
    * I was not sure if this would be accepted */
    /* Here I just put basic one qubit gates */
 
-  void apply_rx(int iqubit, double degree)
+  void apply_r(int iqubit, double degree, std::string basis)
   {
   
-    ops[iqubit].emplace_back(std::make_pair("X",degree));
+    ops[iqubit].emplace_back(std::make_pair(basis,degree));
 
   }
 
@@ -56,10 +57,6 @@ class Circuit
 
   }
 
-  void apply_ry(int iqubit, double degree) 
-  {
-    ops[iqubit].emplace_back(std::make_pair("Y",degree));
-  }
 
   std::vector<Complex> form_ry(double degree)
   {
@@ -72,12 +69,6 @@ class Circuit
 
     return vec;
 
-  }
-
-
-  void apply_rz(int iqubit, double degree)
-  {
-    ops[iqubit].emplace_back(std::make_pair("Z",degree));
   }
 
   std::vector<Complex> form_rz(double degree)
@@ -95,6 +86,8 @@ class Circuit
 
   void apply_cr(int iqubit_c, int iqubit_t, std::string basis_c, std::string basis_t, double degree_c, double degree_t, bool use_as_prob)
   {
+    if(iqubit_c == iqubit_t) return ;
+
     double prob=1.0;
 
     if(use_as_prob)
@@ -134,6 +127,33 @@ class Circuit
   }
 
 
+  int get_rndn_qubit() 
+  {
+   std::uniform_int_distribution<int> unif(0,nqubits_-1);
+   return unif(re);
+  
+  }
+
+  std::string get_rndn_basis() 
+  {
+   std::uniform_int_distribution<int> unif(0,2);
+   int basis= unif(re);
+  
+   if(basis==0) return "X";
+   else if (basis==1) return "Y";
+   else return "Z";
+
+  }
+
+  double get_rndn_degree() 
+  {
+   std::uniform_real_distribution<double> unif(0,360);
+   return unif(re);
+  
+  }
+
+
+
  friend std::ostream& operator<<(std::ostream& os, const Circuit& qc);
 
   ~Circuit(){} 
@@ -143,6 +163,8 @@ class Circuit
   int nqubits_;
   /* ops is the operators dynamically changing for each qubit and storing the basis info and the degree of rotation*/
   std::vector<std::vector<std::pair<std::string, double>>> ops;
+  int iseed=12472983539; 
+  std::default_random_engine re{iseed};
 
 };
 

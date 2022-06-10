@@ -9,9 +9,9 @@ int main()
 
   /*qc.apply_r has the first argument as qubit number and second is the angle */
 
-  qc.apply_rx(0,90);
-  qc.apply_rz(0,45);
-  qc.apply_rx(1,30);
+  qc.apply_r(0,90,"X");
+  qc.apply_r(0,45,"Z");
+  qc.apply_r(1,30,"X");
 
 
   /* controlled rotations have arguments according to the function below : control qubit, target qubit, control basis, 
